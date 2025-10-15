@@ -1,0 +1,378 @@
+{
+  "meta": {
+    "nome": "PosologiaCerta Bundle",
+    "versao": "v0.9-beta",
+    "pais": "BR",
+    "gerado_em": "2025-10-15 19:39:06"
+  },
+  "medicamentos": [
+    {
+      "id": "para",
+      "nome": "Paracetamol",
+      "principioAtivo": "Paracetamol",
+      "classes": [
+        "Analgésico",
+        "Antitérmico"
+      ],
+      "formas": [
+        {
+          "apresentacao": "Gotas 100 mg/mL (1 gota ≈ 2 mg)",
+          "via": "VO"
+        },
+        {
+          "apresentacao": "Solução 32 mg/mL (160 mg/5 mL)",
+          "via": "VO"
+        },
+        {
+          "apresentacao": "Comprimido 500 mg",
+          "via": "VO"
+        },
+        {
+          "apresentacao": "Supositório 125/250 mg",
+          "via": "RET"
+        }
+      ],
+      "faixas": {
+        "pediatria": {
+          "dose": "10–15 mg/kg/dose a cada 4–6 h",
+          "max": "75 mg/kg/dia (ou 3 g/dia, o que for menor)"
+        },
+        "adulto": {
+          "dose": "500–1000 mg a cada 6–8 h",
+          "max": "3–4 g/dia (preferir ≤3 g)"
+        },
+        "gestante": {
+          "nota": "Primeira escolha para dor/febre; menor dose eficaz"
+        }
+      },
+      "ajustes": {
+        "renal": "Intervalar em ClCr <30 mL/min",
+        "hepatica": "Reduzir dose/evitar em hepatopatia grave"
+      },
+      "tfg_rules": [
+        {
+          "range": "<30",
+          "adulto": "aumentar intervalo para 8–12 h; não exceder 3 g/dia",
+          "pediatria": "aumentar intervalo para 6–8 h; máx. 60–75 mg/kg/dia"
+        }
+      ]
+    },
+    {
+      "id": "ibup",
+      "nome": "Ibuprofeno",
+      "principioAtivo": "Ibuprofeno",
+      "classes": [
+        "AINE"
+      ],
+      "formas": [
+        {
+          "apresentacao": "Gotas 50 mg/mL (1 gota ≈ 2,5 mg)",
+          "via": "VO"
+        },
+        {
+          "apresentacao": "Suspensão 100 mg/5 mL",
+          "via": "VO"
+        },
+        {
+          "apresentacao": "Comprimidos 200/400 mg",
+          "via": "VO"
+        }
+      ],
+      "faixas": {
+        "pediatria": {
+          "dose": "5–10 mg/kg/dose a cada 6–8 h (não usar <6 meses)",
+          "max": "40 mg/kg/dia"
+        },
+        "adulto": {
+          "dose": "200–400 mg a cada 6–8 h",
+          "max": "1,2 g/dia (OTC)"
+        },
+        "gestante": {
+          "nota": "Evitar, especialmente no 3º trimestre"
+        }
+      },
+      "ajustes": {
+        "renal": "Evitar em ClCr <30 mL/min",
+        "hepatica": "Cautela em IH grave"
+      },
+      "tfg_rules": [
+        {
+          "range": "<30",
+          "adulto": "evitar AINE; considerar paracetamol/opiáceo fraco",
+          "pediatria": "evitar (<30 mL/min)"
+        }
+      ]
+    },
+    {
+      "id": "amox",
+      "nome": "Amoxicilina",
+      "principioAtivo": "Amoxicilina",
+      "classes": [
+        "Penicilina"
+      ],
+      "formas": [
+        {
+          "apresentacao": "Suspensão 250 mg/5 mL",
+          "via": "VO"
+        },
+        {
+          "apresentacao": "Suspensão 125 mg/5 mL",
+          "via": "VO"
+        },
+        {
+          "apresentacao": "Cápsulas 500 mg",
+          "via": "VO"
+        }
+      ],
+      "faixas": {
+        "pediatria": {
+          "dose": "40–50 mg/kg/dia 8/8 h; grave: 80–90 mg/kg/dia 12/12 h"
+        },
+        "adulto": {
+          "dose": "500 mg 8/8 h ou 875 mg 12/12 h"
+        },
+        "gestante": {
+          "nota": "Uso seguro quando indicado"
+        }
+      },
+      "ajustes": {
+        "renal": "Intervalar em ClCr <30 mL/min"
+      },
+      "tfg_rules": [
+        {
+          "range": "10–30",
+          "adulto": "500 mg 12/12 h (ou 875 mg 24/24 h)",
+          "pediatria": "15–20 mg/kg 12/12 h"
+        },
+        {
+          "range": "<10",
+          "adulto": "500 mg 24/24 h",
+          "pediatria": "15–20 mg/kg 24/24 h"
+        }
+      ]
+    },
+    {
+      "id": "amc",
+      "nome": "Amoxicilina + Clavulanato",
+      "principioAtivo": "Amoxicilina + Ácido Clavulânico",
+      "classes": [
+        "Penicilina + inibidor β-lactamase"
+      ],
+      "formas": [
+        {
+          "apresentacao": "Suspensão 400/57 mg/5 mL",
+          "via": "VO"
+        },
+        {
+          "apresentacao": "Comprimidos 875/125 mg",
+          "via": "VO"
+        }
+      ],
+      "faixas": {
+        "pediatria": {
+          "dose": "25–45 (até 60) mg/kg/dia de amoxi 12/12 h"
+        },
+        "adulto": {
+          "dose": "875/125 mg 12/12 h"
+        },
+        "gestante": {
+          "nota": "Opção frequente e segura"
+        }
+      },
+      "ajustes": {
+        "renal": "Evitar 875/125 em ClCr <30; reduzir frequência"
+      },
+      "tfg_rules": [
+        {
+          "range": "10–30",
+          "adulto": "500/125 mg 12/12 h",
+          "pediatria": "8–12/12 h (dose pela amoxi)"
+        },
+        {
+          "range": "<10",
+          "adulto": "500/125 mg 24/24 h; preferir baixa dose de clavulanato",
+          "pediatria": "24/24 h em casos selecionados"
+        }
+      ]
+    },
+    {
+      "id": "cefalex",
+      "nome": "Cefalexina",
+      "principioAtivo": "Cefalexina",
+      "classes": [
+        "Cefalosporina 1ª"
+      ],
+      "formas": [
+        {
+          "apresentacao": "Suspensão 250 mg/5 mL",
+          "via": "VO"
+        },
+        {
+          "apresentacao": "Cápsulas 500 mg",
+          "via": "VO"
+        }
+      ],
+      "faixas": {
+        "pediatria": {
+          "dose": "25–50 mg/kg/dia 6/6–8/8 h (até 100 mg/kg/dia grave)"
+        },
+        "adulto": {
+          "dose": "500 mg 6/6–8/8 h"
+        },
+        "gestante": {
+          "nota": "Opção segura"
+        }
+      },
+      "tfg_rules": [
+        {
+          "range": "10–30",
+          "adulto": "500 mg 8/8–12/12 h",
+          "pediatria": "8/8–12/12 h"
+        },
+        {
+          "range": "<10",
+          "adulto": "500 mg 24/24 h",
+          "pediatria": "12/12–24/24 h"
+        }
+      ]
+    },
+    {
+      "id": "midaz",
+      "nome": "Midazolam",
+      "principioAtivo": "Midazolam",
+      "classes": [
+        "Sedação"
+      ],
+      "formas": [
+        {
+          "apresentacao": "Ampola 5 mg/mL",
+          "via": "IV/IM"
+        },
+        {
+          "apresentacao": "Solução 2 mg/mL",
+          "via": "IN"
+        }
+      ],
+      "faixas": {
+        "pediatria": {
+          "dose": "0,1 mg/kg IV; IN 0,2–0,3 mg/kg (máx. 10 mg)"
+        },
+        "adulto": {
+          "dose": "2–5 mg IV titulando"
+        }
+      }
+    },
+    {
+      "id": "fenta",
+      "nome": "Fentanil",
+      "principioAtivo": "Citrato de Fentanila",
+      "classes": [
+        "Opioide"
+      ],
+      "formas": [
+        {
+          "apresentacao": "Ampola 50 mcg/mL",
+          "via": "IV"
+        }
+      ],
+      "faixas": {
+        "pediatria": {
+          "dose": "1–2 mcg/kg IV"
+        },
+        "adulto": {
+          "dose": "25–100 mcg IV"
+        }
+      }
+    },
+    {
+      "id": "ketamina",
+      "nome": "Quetamina (Cetamina)",
+      "principioAtivo": "Cloridrato de Cetamina",
+      "classes": [
+        "Anestésico dissociativo"
+      ],
+      "formas": [
+        {
+          "apresentacao": "Ampola 50 mg/mL",
+          "via": "IV/IM"
+        }
+      ],
+      "faixas": {
+        "pediatria": {
+          "dose": "1–2 mg/kg IV ou 4–5 mg/kg IM"
+        },
+        "adulto": {
+          "dose": "1–2 mg/kg IV"
+        }
+      }
+    },
+    {
+      "id": "rocur",
+      "nome": "Rocurônio",
+      "principioAtivo": "Brometo de Rocurônio",
+      "classes": [
+        "Bloqueador neuromuscular"
+      ],
+      "formas": [
+        {
+          "apresentacao": "Ampola 10 mg/mL",
+          "via": "IV"
+        }
+      ],
+      "faixas": {
+        "pediatria": {
+          "dose": "1–1,2 mg/kg IV (SRI)"
+        },
+        "adulto": {
+          "dose": "1–1,2 mg/kg IV"
+        }
+      }
+    },
+    {
+      "id": "epi_im",
+      "nome": "Adrenalina (anafilaxia)",
+      "principioAtivo": "Epinefrina",
+      "classes": [
+        "Simpaticomimético"
+      ],
+      "formas": [
+        {
+          "apresentacao": "Solução 1:1000 (1 mg/mL)",
+          "via": "IM"
+        }
+      ],
+      "faixas": {
+        "pediatria": {
+          "dose": "0,01 mg/kg IM (máx. 0,5 mg)"
+        },
+        "adulto": {
+          "dose": "0,5 mg IM"
+        }
+      }
+    }
+  ],
+  "patologias": [],
+  "protocolos": [
+    {
+      "id": "sri",
+      "nome": "Sequência Rápida de Intubação (SRI)",
+      "area": "Emergência",
+      "drogas": [
+        {
+          "etapa": "Sedação/Analgesia",
+          "opcoes": [
+            "fenta",
+            "midaz",
+            "ketamina"
+          ]
+        },
+        {
+          "etapa": "Bloqueio Neuromuscular",
+          "opcoes": [
+            "rocur"
+          ]
+        }
+      ]
+    }
+  ]
+}

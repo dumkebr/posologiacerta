@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PosologiaCerta • Beta</title>
+<link rel="manifest" href="manifest.json"><meta name="theme-color" content="#0ea5e9">
+<style>
+:root{--bg:#0f172a;--txt:#e5e7eb;--mut:#94a3b8;--brand:#22c55e;--acc:#0ea5e9;--radius:14px}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,Segoe UI,Roboto}
+.wrap{max-width:1100px;margin:0 auto;padding:24px 16px}
+header{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.logo{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--acc),var(--brand));display:grid;place-items:center}
+.card{background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));border:1px solid rgba(148,163,184,.25);border-radius:var(--radius);padding:14px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+input,select,button{background:#0b1227;color:var(--txt);border:1px solid rgba(148,163,184,.3);border-radius:10px;padding:10px 12px}
+button.primary{background:linear-gradient(135deg,var(--acc),var(--brand));border:0;color:#071f14;font-weight:700}
+.chip{padding:6px 10px;border-radius:999px;border:1px solid rgba(148,163,184,.35);cursor:pointer;color:var(--mut)}
+.chip.active{background:linear-gradient(135deg,var(--acc),var(--brand));color:#001b0e;border:0;font-weight:800}
+.grid{display:grid;grid-template-columns:1.2fr .8fr;gap:16px}@media (max-width:940px){.grid{grid-template-columns:1fr}}
+.result{padding:10px 0;border-bottom:1px dashed rgba(148,163,184,.25)}.mut{color:var(--mut)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="row"><div class="logo">PC</div><div><h2 style="margin:0">PosologiaCerta <span class="mut">• beta</span></h2><small class="mut">Busca de fármacos + cálculo de dose (BR)</small></div></div>
+  <div class="row"><button id="btn-load" class="primary">Carregar bundle</button><input id="file" type="file" accept="application/json" style="display:none"><button id="btn-install">Instalar (PWA)</button></div>
+</header>
+<section class="card" style="margin-top:10px">
+  <div class="row">
+    <input id="q" placeholder="Busque por medicamento ou patologia (ex.: amoxicilina, otite, IAM)..." style="flex:1">
+    <button id="btn-search" class="primary">Buscar</button>
+    <button id="btn-clear">Limpar</button>
+    <span class="chip active" data-mode="adulto">Adulto</span>
+    <span class="chip" data-mode="pediatria">Pediatria</span>
+    <span class="chip" data-mode="gestante">Gestante</span>
+  </div>
+</section>
+<div class="grid" style="margin-top:14px">
+  <section class="card" id="results"><div class="mut">Importe o <b>bundle JSON</b> e pesquise por ex.: <b>otite</b>, <b>sinusite</b>, <b>IAM</b>.</div></section>
+  <aside class="card">
+    <h3 style="margin:0 0 8px">Calculadora pediátrica</h3>
+    <div class="row"><input id="peso" type="number" step="0.1" placeholder="Peso (kg)"><input id="mgkg" type="number" step="0.1" placeholder="mg/kg"><input id="freq" type="number" step="1" placeholder="x/dia"></div>
+    <div class="row" style="margin-top:6px"><input id="conc" type="number" step="0.1" placeholder="Concentração (mg/mL ou mg/cp)" style="flex:1"><select id="forma"><option value="mL">mL</option><option value="cp">comprimidos</option><option value="gota">gotas (1 gota ≈ 0,05 mL)</option></select><button id="btn-calc" class="primary">Calcular</button></div>
+    <pre id="out" class="mut" style="white-space:pre-wrap;margin:8px 0 0"></pre>
+  </aside>
+</div>
+<footer class="mut" style="margin-top:16px"><small>Protótipo informativo para profissionais de saúde. Ajustar a contexto clínico, função renal/hepática e interações.</small></footer>
+</div>
+<script>
+let DB={medicamentos:[],patologias:[],protocolos:[],meta:{}};const state={modo:'adulto',query:''};
+function qs(s){return document.querySelector(s)}function el(t,p={},c=[]){const e=document.createElement(t);Object.assign(e,p);c.forEach(x=>e.appendChild(typeof x==='string'?document.createTextNode(x):x));return e}
+function render(list){const root=qs('#results');root.innerHTML='';if(!list.length){root.appendChild(el('div',{className:'mut',innerText:'Sem resultados.'}));return;}list.forEach(item=>{const f=(item.faixas||{})[state.modo]||{};const head=el('div',{innerHTML:'<b>'+item.nome+'</b> <span class=mut>('+(item.principioAtivo||'')+')</span>'});const dose=el('div',{innerHTML:'<b>Dose:</b> '+(f.dose||f.nota||'-')});const max=f.max?el('div',{innerHTML:'<b>Máximo:</b> '+f.max}):null;const formas=el('div',{className:'mut',innerText:(item.formas||[]).map(x=>x.apresentacao).join(' • ')});const box=el('div',{className:'result'},[head,formas,dose]);if(max)box.appendChild(max);root.appendChild(box);});}
+function search(q){q=(q||'').toLowerCase().trim();state.query=q;const meds=DB.medicamentos.filter(m=>(m.nome||'').toLowerCase().includes(q)||(m.principioAtivo||'').toLowerCase().includes(q)||(m.classes||[]).join(' ').toLowerCase().includes(q));render(meds);}
+function calc(){const peso=parseFloat(qs('#peso').value);const mgkg=parseFloat(qs('#mgkg').value);const freq=parseFloat(qs('#freq').value||1);const conc=parseFloat(qs('#conc').value||0);const forma=qs('#forma').value;if(!(peso>0&&mgkg>0)){qs('#out').textContent='Informe peso e mg/kg.';return;}const mg=peso*mgkg;let conv='';if(conc>0){if(forma==='mL')conv=(mg/conc).toFixed(2)+' mL';if(forma==='cp')conv=(mg/conc).toFixed(2)+' comprimidos';if(forma==='gota')conv=((mg/conc)/0.05).toFixed(0)+' gotas';}qs('#out').textContent='Dose: '+mg.toFixed(0)+' mg por tomada ('+freq+'x/dia)'+(conv?'\n≈ '+conv:'');}
+document.addEventListener('DOMContentLoaded',()=>{if('serviceWorker'in navigator){navigator.serviceWorker.register('./sw.js').catch(()=>{});}document.querySelectorAll('.chip[data-mode]').forEach(ch=>{ch.addEventListener('click',()=>{document.querySelectorAll('.chip[data-mode]').forEach(c=>c.classList.remove('active'));ch.classList.add('active');state.modo=ch.dataset.mode;search(state.query);});});qs('#btn-search').onclick=()=>search(qs('#q').value);qs('#btn-clear').onclick=()=>{qs('#q').value='';search('')};qs('#btn-calc').onclick=calc;qs('#btn-load').onclick=()=>qs('#file').click();qs('#file').addEventListener('change',async(e)=>{const f=e.target.files&&e.target.files[0];if(!f)return;try{const txt=await f.text();DB=JSON.parse(txt);search(state.query);}catch(err){alert('Falha ao importar: '+err.message)}});let dp=null;window.addEventListener('beforeinstallprompt',(e)=>{e.preventDefault();dp=e});qs('#btn-install').onclick=async()=>{if(dp){dp.prompt();dp=null;}else alert('No desktop: Menu do navegador → “Instalar app”.');};});
+</script>
+</body></html>
