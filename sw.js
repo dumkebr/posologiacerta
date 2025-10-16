@@ -1,5 +1,4 @@
-// sw.js — PosologiaCerta (força atualização de cache)
-const CACHE_NAME = 'pc-v2'; // << troquei v1 -> v2 para invalidar cache antigo
+const CACHE_NAME = 'pc-v3';
 const ASSETS = [
   './',
   './index.html',
@@ -8,32 +7,32 @@ const ASSETS = [
   './posologiacerta-bundle-v0.10-beta2-BR.json'
 ];
 
-self.addEventListener('install', (e) => {
+self.addEventListener('install', e => {
   e.waitUntil((async () => {
-    const cache = await caches.open(CACHE_NAME);
-    await cache.addAll(ASSETS);
+    const c = await caches.open(CACHE_NAME);
+    await c.addAll(ASSETS);
     self.skipWaiting();
   })());
 });
 
-self.addEventListener('activate', (e) => {
+self.addEventListener('activate', e => {
   e.waitUntil((async () => {
     const keys = await caches.keys();
-    await Promise.all(keys.map(k => k !== CACHE_NAME ? caches.delete(k) : Promise.resolve()));
+    await Promise.all(keys.map(k => k !== CACHE_NAME ? caches.delete(k) : 0));
     self.clients.claim();
   })());
 });
 
-self.addEventListener('fetch', (e) => {
-  const req = e.request;
+self.addEventListener('fetch', e => {
   e.respondWith((async () => {
-    // cache-first, mas atualiza quando vier da rede
     const cache = await caches.open(CACHE_NAME);
-    const cached = await cache.match(req);
-    const fetchPromise = fetch(req).then((res) => {
-      try { cache.put(req, res.clone()); } catch {}
-      return res;
-    }).catch(() => cached);
-    return cached || fetchPromise;
+    const cached = await cache.match(e.request);
+    try {
+      const fresh = await fetch(e.request);
+      try { cache.put(e.request, fresh.clone()); } catch {}
+      return fresh;
+    } catch {
+      return cached || Response.error();
+    }
   })());
 });
