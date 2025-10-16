@@ -3,82 +3,409 @@
     "nome": "PosologiaCerta Bundle",
     "versao": "v0.10-beta2",
     "pais": "BR",
-    "gerado_em": "2025-10-16T20:30:00-03:00"
+    "gerado_em": "2025-10-16 04:29:51"
   },
   "medicamentos": [
     {
       "id": "dipirona",
       "nome": "Dipirona",
       "principioAtivo": "Metamizol sódico",
+      "indicacoes": [
+        "dor",
+        "febre"
+      ],
       "faixas": {
-        "adulto": { "dose": "500–1000 mg VO/IV a cada 6–8 h (máx 4 g/dia)" },
-        "pediatria": { "dose": "10–20 mg/kg/dose VO/IV a cada 6–8 h" }
-      }
-    },
-    {
-      "id": "ibuprofeno",
-      "nome": "Ibuprofeno",
-      "principioAtivo": "Ibuprofeno",
-      "faixas": {
-        "adulto": { "dose": "200–400 mg VO a cada 6–8 h (máx 2,4 g/dia)" },
-        "pediatria": { "dose": "5–10 mg/kg/dose VO a cada 6–8 h (máx 40 mg/kg/dia)" }
+        "adulto": {
+          "dose": "500–1000 mg VO/IV 6–8/8 h (máx 4 g/dia)"
+        },
+        "pediatria": {
+          "dose": "10–20 mg/kg/dose VO/IV 6–8/8 h"
+        },
+        "gestante": {
+          "nota": "Evitar no 3º tri; usar se benefício > risco"
+        }
       }
     },
     {
       "id": "paracetamol",
       "nome": "Paracetamol",
       "principioAtivo": "Paracetamol",
+      "indicacoes": [
+        "dor",
+        "febre"
+      ],
       "faixas": {
-        "adulto": { "dose": "500–1000 mg VO/IV a cada 6–8 h (máx 4 g/dia)" },
-        "pediatria": { "dose": "10–15 mg/kg/dose VO/IV a cada 6–8 h" }
+        "adulto": {
+          "dose": "500–1000 mg VO 6–8/8 h (máx 3–4 g/dia)"
+        },
+        "pediatria": {
+          "dose": "10–15 mg/kg/dose VO 6–8/8 h (máx 75 mg/kg/dia)"
+        },
+        "gestante": {
+          "nota": "Preferível na gestação"
+        }
+      }
+    },
+    {
+      "id": "ibuprofeno",
+      "nome": "Ibuprofeno",
+      "principioAtivo": "Ibuprofeno",
+      "indicacoes": [
+        "dor",
+        "inflamação"
+      ],
+      "faixas": {
+        "adulto": {
+          "dose": "200–400 mg VO 6–8/8 h (máx 2,4 g/dia)"
+        },
+        "pediatria": {
+          "dose": "5–10 mg/kg/dose VO 6–8/8 h (máx 40 mg/kg/dia)"
+        },
+        "gestante": {
+          "nota": "Evitar no 3º trimestre"
+        }
       }
     },
     {
       "id": "amoxicilina",
       "nome": "Amoxicilina",
       "principioAtivo": "Amoxicilina",
+      "indicacoes": [
+        "otite",
+        "sinusite",
+        "faringite"
+      ],
       "faixas": {
-        "adulto": { "dose": "500 mg VO 8/8 h ou 875 mg VO 12/12 h" },
-        "pediatria": { "dose": "40–50 mg/kg/dia VO divididos 8/8 h" },
-        "gestante": { "dose": "Categoria B – seguro para infecções urinárias e otite média" }
-      },
-      "ajusteTFG": {
-        "menor_30": "Usar 500 mg 12/12 h",
-        "menor_10": "500 mg 24/24 h"
+        "adulto": {
+          "dose": "500 mg 8/8 h ou 875 mg 12/12 h"
+        },
+        "pediatria": {
+          "dose": "40–50 mg/kg/dia VO 8/8 h (casos graves: até 80–90 mg/kg/dia)"
+        },
+        "gestante": {
+          "nota": "Categoria B – seguro"
+        }
+      }
+    },
+    {
+      "id": "amoxiclav",
+      "nome": "Amoxicilina + Clavulanato",
+      "principioAtivo": "Amoxicilina + Ácido clavulânico",
+      "indicacoes": [
+        "sinusite",
+        "otite média",
+        "ITU"
+      ],
+      "faixas": {
+        "adulto": {
+          "dose": "875/125 mg 12/12 h"
+        },
+        "pediatria": {
+          "dose": "40–90 mg/kg/dia (componente amoxi) 12/12 h"
+        },
+        "gestante": {
+          "nota": "Categoria B"
+        }
+      }
+    },
+    {
+      "id": "cefalexina",
+      "nome": "Cefalexina",
+      "principioAtivo": "Cefalexina",
+      "indicacoes": [
+        "faringoamigdalite",
+        "celulite",
+        "ITU"
+      ],
+      "faixas": {
+        "adulto": {
+          "dose": "500 mg 6–8/8 h"
+        },
+        "pediatria": {
+          "dose": "25–50 mg/kg/dia 6–8/8 h (graves: 75–100 mg/kg/dia)"
+        },
+        "gestante": {
+          "nota": "Categoria B"
+        }
       }
     },
     {
       "id": "ceftriaxona",
       "nome": "Ceftriaxona",
       "principioAtivo": "Ceftriaxona sódica",
+      "indicacoes": [
+        "pneumonia",
+        "meningite",
+        "sepse"
+      ],
       "faixas": {
-        "adulto": { "dose": "1–2 g IV 1×/dia (máx 4 g/dia)" },
-        "pediatria": { "dose": "50–75 mg/kg/dia IV 1×/dia (máx 2 g/dia)" },
-        "gestante": { "dose": "Categoria B – pode ser usada em ITU, pneumonia" }
-      },
-      "ajusteTFG": {
-        "menor_10": "Manter dose; pode aumentar intervalo se uso prolongado"
+        "adulto": {
+          "dose": "1–2 g IV 1×/dia (máx 4 g/dia)"
+        },
+        "pediatria": {
+          "dose": "50–75 mg/kg/dia IV 1×/dia (máx 2 g/dia)"
+        },
+        "gestante": {
+          "nota": "Categoria B – uso permitido"
+        }
+      }
+    },
+    {
+      "id": "azitromicina",
+      "nome": "Azitromicina",
+      "principioAtivo": "Azitromicina",
+      "indicacoes": [
+        "faringite",
+        "otite",
+        "pneumonia atípica"
+      ],
+      "faixas": {
+        "adulto": {
+          "dose": "500 mg/dia por 3–5 dias"
+        },
+        "pediatria": {
+          "dose": "10 mg/kg/dia por 3–5 dias"
+        },
+        "gestante": {
+          "nota": "Categoria B – aceitável"
+        }
+      }
+    },
+    {
+      "id": "clindamicina",
+      "nome": "Clindamicina",
+      "principioAtivo": "Clindamicina",
+      "indicacoes": [
+        "SSTI",
+        "abscesso dentário"
+      ],
+      "faixas": {
+        "adulto": {
+          "dose": "300–450 mg VO 6/6 h"
+        },
+        "pediatria": {
+          "dose": "20–40 mg/kg/dia 6–8/8 h"
+        },
+        "gestante": {
+          "nota": "Usar se necessário"
+        }
+      }
+    },
+    {
+      "id": "metronidazol",
+      "nome": "Metronidazol",
+      "principioAtivo": "Metronidazol",
+      "indicacoes": [
+        "infecções anaeróbias",
+        "vaginites"
+      ],
+      "faixas": {
+        "adulto": {
+          "dose": "400–500 mg VO 8/8 h"
+        },
+        "pediatria": {
+          "dose": "20–30 mg/kg/dia 8/8 h"
+        },
+        "gestante": {
+          "nota": "Preferir após 1º tri; curto curso"
+        }
+      }
+    },
+    {
+      "id": "ciprofloxacino",
+      "nome": "Ciprofloxacino",
+      "principioAtivo": "Ciprofloxacino",
+      "indicacoes": [
+        "ITU complicada",
+        "diarreia bacteriana"
+      ],
+      "faixas": {
+        "adulto": {
+          "dose": "500 mg VO 12/12 h"
+        },
+        "pediatria": {
+          "nota": "Evitar de rotina; exceções específicas"
+        },
+        "gestante": {
+          "nota": "Contraindicado"
+        }
+      }
+    },
+    {
+      "id": "salbutamol",
+      "nome": "Salbutamol (nebulização)",
+      "principioAtivo": "Salbutamol",
+      "indicacoes": [
+        "asma",
+        "broncoespasmo"
+      ],
+      "faixas": {
+        "adulto": {
+          "dose": "2,5 mg (0,5 mL) + SF q.s.p. 3–4 mL; repetir conforme resposta"
+        },
+        "pediatria": {
+          "dose": "0,15 mg/kg (mín 1,25 mg) por nebulização; repetir conforme resposta"
+        },
+        "gestante": {
+          "nota": "Usar se necessário"
+        }
+      }
+    },
+    {
+      "id": "ipratropio",
+      "nome": "Brometo de Ipratrópio",
+      "principioAtivo": "Ipratrópio",
+      "indicacoes": [
+        "asma exacerbação"
+      ],
+      "faixas": {
+        "adulto": {
+          "dose": "0,5 mg nebulização 20/20 min na 1ª hora"
+        },
+        "pediatria": {
+          "dose": "250 mcg nebulização 20/20 min na 1ª hora"
+        },
+        "gestante": {
+          "nota": "Seguro"
+        }
+      }
+    },
+    {
+      "id": "prednisona",
+      "nome": "Prednisona",
+      "principioAtivo": "Prednisona",
+      "indicacoes": [
+        "asma exacerbação",
+        "urticária"
+      ],
+      "faixas": {
+        "adulto": {
+          "dose": "20–40 mg/dia por 3–5 dias"
+        },
+        "pediatria": {
+          "dose": "1–2 mg/kg/dia (máx 40 mg) por 3–5 dias"
+        },
+        "gestante": {
+          "nota": "Usar menor dose eficaz"
+        }
       }
     },
     {
       "id": "omeprazol",
       "nome": "Omeprazol",
       "principioAtivo": "Omeprazol",
+      "indicacoes": [
+        "DRGE",
+        "dispepsia"
+      ],
       "faixas": {
-        "adulto": { "dose": "20–40 mg VO 1×/dia antes do café" },
-        "pediatria": { "dose": "1 mg/kg/dia VO (dividido em 1–2 doses)" },
-        "gestante": { "dose": "Categoria C – usar se benefício superar risco" }
+        "adulto": {
+          "dose": "20–40 mg VO 1×/dia"
+        },
+        "pediatria": {
+          "dose": "0,7–1 mg/kg/dia"
+        },
+        "gestante": {
+          "nota": "Usar se necessário"
+        }
+      }
+    },
+    {
+      "id": "ondansetrona",
+      "nome": "Ondansetrona",
+      "principioAtivo": "Ondansetrona",
+      "indicacoes": [
+        "náuseas e vômitos"
+      ],
+      "faixas": {
+        "adulto": {
+          "dose": "4–8 mg VO/IV 8/8 h se necessário"
+        },
+        "pediatria": {
+          "dose": "0,15 mg/kg/dose IV/VO 8/8–12/12 h"
+        },
+        "gestante": {
+          "nota": "Usar se necessário"
+        }
+      }
+    },
+    {
+      "id": "aas",
+      "nome": "Ácido Acetilsalicílico (AAS)",
+      "principioAtivo": "AAS",
+      "indicacoes": [
+        "IAM",
+        "antiagregante"
+      ],
+      "faixas": {
+        "adulto": {
+          "dose": "300 mg VO carga, depois 100 mg/dia"
+        },
+        "pediatria": {
+          "nota": "Evitar (Reye)"
+        },
+        "gestante": {
+          "nota": "Evitar altas doses; 75–100 mg/dia em indicações obstétricas"
+        }
       }
     },
     {
       "id": "enoxaparina",
       "nome": "Enoxaparina",
       "principioAtivo": "Enoxaparina sódica",
+      "indicacoes": [
+        "IAM",
+        "TEV"
+      ],
       "faixas": {
-        "adulto": { "dose": "1 mg/kg SC 12/12 h (tratamento) ou 40 mg SC 1×/dia (profilaxia)" },
-        "gestante": { "dose": "Categoria B – seguro, usar ajuste de peso e monitorar plaquetas" }
-      },
-      "ajusteTFG": { "menor_30": "1 mg/kg SC 1×/dia ou 20 mg profilático 1×/dia" }
+        "adulto": {
+          "dose": "1 mg/kg SC 12/12 h (tratamento) ou 40 mg SC 1×/dia (profilaxia)"
+        },
+        "pediatria": {
+          "nota": "Usos selecionados"
+        },
+        "gestante": {
+          "nota": "Opção segura; monitorar plaquetas"
+        }
+      }
+    },
+    {
+      "id": "adrenalina",
+      "nome": "Adrenalina (IM 1:1000)",
+      "principioAtivo": "Epinefrina",
+      "indicacoes": [
+        "anafilaxia"
+      ],
+      "faixas": {
+        "adulto": {
+          "dose": "0,5 mg IM, repetir 5–15 min se necessário"
+        },
+        "pediatria": {
+          "dose": "0,01 mg/kg IM, máx 0,5 mg"
+        },
+        "gestante": {
+          "nota": "Usar sem atraso"
+        }
+      }
+    },
+    {
+      "id": "amiodarona",
+      "nome": "Amiodarona",
+      "principioAtivo": "Amiodarona",
+      "indicacoes": [
+        "PCR FV/TV"
+      ],
+      "faixas": {
+        "adulto": {
+          "dose": "300 mg IV em bolus após 3º choque"
+        },
+        "pediatria": {
+          "dose": "5 mg/kg IV em bolus"
+        },
+        "gestante": {
+          "nota": "Usar se benefício > risco"
+        }
+      }
     }
   ],
   "protocolos": [
@@ -88,57 +415,56 @@
       "passos": [
         "Oxigênio se SatO₂ < 94%",
         "AAS 300 mg + Clopidogrel 300 mg VO",
-        "Heparina ou Enoxaparina 1 mg/kg SC 12/12 h",
-        "Evitar nitrato e morfina em IAM inferior/direito (D2, D3, aVF)",
-        "Encaminhar para hemodinâmica urgente"
+        "Anticoagulação (Enoxaparina 1 mg/kg SC 12/12 h)",
+        "Evitar nitrato/morfina no IAM inferior/direito (D2, D3, aVF)",
+        "Hemodinâmica urgente"
       ]
     },
     {
       "id": "pcr",
       "titulo": "Parada Cardiorrespiratória (PCR)",
       "passos": [
-        "Iniciar RCP imediata (30:2 compressões)",
+        "RCP alta qualidade",
         "Adrenalina 1 mg IV a cada 3–5 min",
-        "Amiodarona 300 mg IV após 3º choque",
-        "Checar ritmo e causas reversíveis (Hs e Ts)"
-      ]
-    },
-    {
-      "id": "sri",
-      "titulo": "Síndrome Respiratória Infecciosa (SRI)",
-      "passos": [
-        "Isolamento + máscara cirúrgica",
-        "Suporte ventilatório conforme gravidade",
-        "Oseltamivir se suspeita de influenza",
-        "Antibióticos empíricos se pneumonia comunitária"
+        "FV/TV: desfibrilar + Amiodarona 300 mg IV",
+        "Tratar Hs e Ts"
       ]
     },
     {
       "id": "anafilaxia",
       "titulo": "Anafilaxia",
       "passos": [
-        "Adrenalina 0,01 mg/kg IM (1:1000) máx 0,5 mg",
+        "Adrenalina 0,01 mg/kg IM (máx 0,5 mg)",
         "O₂, acesso venoso, SF EV rápido",
-        "Hidrocortisona 200 mg EV + anti-histamínico",
-        "Monitorização contínua"
+        "Anti-histamínico + Corticoide",
+        "Observação e segunda dose se necessário"
       ]
     }
   ],
   "interacoes": [
     {
-      "drogas": ["AAS", "Enoxaparina"],
+      "drogas": [
+        "AAS",
+        "Enoxaparina"
+      ],
       "gravidade": "Alta",
-      "descricao": "Aumento do risco de sangramento — monitorar hemoglobina e suspender se sangramento ativo."
+      "descricao": "Risco aumentado de sangramento — monitorar."
     },
     {
-      "drogas": ["ISRS", "Tramadol"],
+      "drogas": [
+        "ISRS",
+        "Tramadol"
+      ],
       "gravidade": "Alta",
-      "descricao": "Risco de síndrome serotoninérgica — evitar associação ou monitorar sinais de toxicidade."
+      "descricao": "Risco de síndrome serotoninérgica — evitar associação."
     },
     {
-      "drogas": ["IECA", "Espironolactona"],
+      "drogas": [
+        "IECA",
+        "Espironolactona"
+      ],
       "gravidade": "Moderada",
-      "descricao": "Pode elevar potássio sérico — monitorar K⁺ e função renal."
+      "descricao": "Pode elevar K⁺ — monitorar potássio e função renal."
     }
   ]
 }
