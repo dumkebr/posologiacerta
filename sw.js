@@ -1,3 +1,4 @@
+// sw.js — PosologiaCerta cache-bust v3
 const CACHE_NAME = 'pc-v3';
 const ASSETS = [
   './',
@@ -6,23 +7,20 @@ const ASSETS = [
   './icon-512.png',
   './posologiacerta-bundle-v0.10-beta2-BR.json'
 ];
-
 self.addEventListener('install', e => {
   e.waitUntil((async () => {
-    const c = await caches.open(CACHE_NAME);
-    await c.addAll(ASSETS);
+    const cache = await caches.open(CACHE_NAME);
+    await cache.addAll(ASSETS);
     self.skipWaiting();
   })());
 });
-
 self.addEventListener('activate', e => {
   e.waitUntil((async () => {
     const keys = await caches.keys();
-    await Promise.all(keys.map(k => k !== CACHE_NAME ? caches.delete(k) : 0));
+    await Promise.all(keys.map(k => k !== CACHE_NAME ? caches.delete(k) : Promise.resolve()));
     self.clients.claim();
   })());
 });
-
 self.addEventListener('fetch', e => {
   e.respondWith((async () => {
     const cache = await caches.open(CACHE_NAME);
