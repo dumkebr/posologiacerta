@@ -3,24 +3,142 @@
     "nome": "PosologiaCerta Bundle",
     "versao": "v0.10-beta2",
     "pais": "BR",
-    "gerado_em": "2025-10-16 00:46:20"
+    "gerado_em": "2025-10-16T20:30:00-03:00"
   },
   "medicamentos": [
     {
-      "id": "para",
+      "id": "dipirona",
+      "nome": "Dipirona",
+      "principioAtivo": "Metamizol sódico",
+      "faixas": {
+        "adulto": { "dose": "500–1000 mg VO/IV a cada 6–8 h (máx 4 g/dia)" },
+        "pediatria": { "dose": "10–20 mg/kg/dose VO/IV a cada 6–8 h" }
+      }
+    },
+    {
+      "id": "ibuprofeno",
+      "nome": "Ibuprofeno",
+      "principioAtivo": "Ibuprofeno",
+      "faixas": {
+        "adulto": { "dose": "200–400 mg VO a cada 6–8 h (máx 2,4 g/dia)" },
+        "pediatria": { "dose": "5–10 mg/kg/dose VO a cada 6–8 h (máx 40 mg/kg/dia)" }
+      }
+    },
+    {
+      "id": "paracetamol",
       "nome": "Paracetamol",
       "principioAtivo": "Paracetamol",
       "faixas": {
-        "adulto": {
-          "dose": "500–1000 mg 6–8/8 h"
-        },
-        "pediatria": {
-          "dose": "10–15 mg/kg/dose 6–8/8 h"
-        }
+        "adulto": { "dose": "500–1000 mg VO/IV a cada 6–8 h (máx 4 g/dia)" },
+        "pediatria": { "dose": "10–15 mg/kg/dose VO/IV a cada 6–8 h" }
       }
+    },
+    {
+      "id": "amoxicilina",
+      "nome": "Amoxicilina",
+      "principioAtivo": "Amoxicilina",
+      "faixas": {
+        "adulto": { "dose": "500 mg VO 8/8 h ou 875 mg VO 12/12 h" },
+        "pediatria": { "dose": "40–50 mg/kg/dia VO divididos 8/8 h" },
+        "gestante": { "dose": "Categoria B – seguro para infecções urinárias e otite média" }
+      },
+      "ajusteTFG": {
+        "menor_30": "Usar 500 mg 12/12 h",
+        "menor_10": "500 mg 24/24 h"
+      }
+    },
+    {
+      "id": "ceftriaxona",
+      "nome": "Ceftriaxona",
+      "principioAtivo": "Ceftriaxona sódica",
+      "faixas": {
+        "adulto": { "dose": "1–2 g IV 1×/dia (máx 4 g/dia)" },
+        "pediatria": { "dose": "50–75 mg/kg/dia IV 1×/dia (máx 2 g/dia)" },
+        "gestante": { "dose": "Categoria B – pode ser usada em ITU, pneumonia" }
+      },
+      "ajusteTFG": {
+        "menor_10": "Manter dose; pode aumentar intervalo se uso prolongado"
+      }
+    },
+    {
+      "id": "omeprazol",
+      "nome": "Omeprazol",
+      "principioAtivo": "Omeprazol",
+      "faixas": {
+        "adulto": { "dose": "20–40 mg VO 1×/dia antes do café" },
+        "pediatria": { "dose": "1 mg/kg/dia VO (dividido em 1–2 doses)" },
+        "gestante": { "dose": "Categoria C – usar se benefício superar risco" }
+      }
+    },
+    {
+      "id": "enoxaparina",
+      "nome": "Enoxaparina",
+      "principioAtivo": "Enoxaparina sódica",
+      "faixas": {
+        "adulto": { "dose": "1 mg/kg SC 12/12 h (tratamento) ou 40 mg SC 1×/dia (profilaxia)" },
+        "gestante": { "dose": "Categoria B – seguro, usar ajuste de peso e monitorar plaquetas" }
+      },
+      "ajusteTFG": { "menor_30": "1 mg/kg SC 1×/dia ou 20 mg profilático 1×/dia" }
     }
   ],
-  "patologias": [],
-  "protocolos": [],
-  "interacoes": []
+  "protocolos": [
+    {
+      "id": "iam",
+      "titulo": "Infarto Agudo do Miocárdio (IAM)",
+      "passos": [
+        "Oxigênio se SatO₂ < 94%",
+        "AAS 300 mg + Clopidogrel 300 mg VO",
+        "Heparina ou Enoxaparina 1 mg/kg SC 12/12 h",
+        "Evitar nitrato e morfina em IAM inferior/direito (D2, D3, aVF)",
+        "Encaminhar para hemodinâmica urgente"
+      ]
+    },
+    {
+      "id": "pcr",
+      "titulo": "Parada Cardiorrespiratória (PCR)",
+      "passos": [
+        "Iniciar RCP imediata (30:2 compressões)",
+        "Adrenalina 1 mg IV a cada 3–5 min",
+        "Amiodarona 300 mg IV após 3º choque",
+        "Checar ritmo e causas reversíveis (Hs e Ts)"
+      ]
+    },
+    {
+      "id": "sri",
+      "titulo": "Síndrome Respiratória Infecciosa (SRI)",
+      "passos": [
+        "Isolamento + máscara cirúrgica",
+        "Suporte ventilatório conforme gravidade",
+        "Oseltamivir se suspeita de influenza",
+        "Antibióticos empíricos se pneumonia comunitária"
+      ]
+    },
+    {
+      "id": "anafilaxia",
+      "titulo": "Anafilaxia",
+      "passos": [
+        "Adrenalina 0,01 mg/kg IM (1:1000) máx 0,5 mg",
+        "O₂, acesso venoso, SF EV rápido",
+        "Hidrocortisona 200 mg EV + anti-histamínico",
+        "Monitorização contínua"
+      ]
+    }
+  ],
+  "interacoes": [
+    {
+      "drogas": ["AAS", "Enoxaparina"],
+      "gravidade": "Alta",
+      "descricao": "Aumento do risco de sangramento — monitorar hemoglobina e suspender se sangramento ativo."
+    },
+    {
+      "drogas": ["ISRS", "Tramadol"],
+      "gravidade": "Alta",
+      "descricao": "Risco de síndrome serotoninérgica — evitar associação ou monitorar sinais de toxicidade."
+    },
+    {
+      "drogas": ["IECA", "Espironolactona"],
+      "gravidade": "Moderada",
+      "descricao": "Pode elevar potássio sérico — monitorar K⁺ e função renal."
+    }
+  ]
 }
