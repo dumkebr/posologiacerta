@@ -2,7 +2,45 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>PosologiaCerta • Beta 2.1 (autoload)</title>
+<title>PosologiaCerta • Beta 2.1 <script>
+// ... deixe o resto do arquivo como está
+
+async function autoload(){
+  // ordem de tentativa (o 1º é o beta2):
+  const candidates = [
+    "./posologiacerta-bundle-v0.10-beta2-BR.json",
+    "./posologiacerta-bundle-v0.9-beta-BR%20(1).json",
+    "./posologiacerta-bundle-v0.9-beta-BR.json"
+  ];
+
+  for (const name of candidates) {
+    try {
+      // cache-buster + no-store para evitar SW/cache antigo
+      const url = `${name}?t=${Date.now()}`;
+      const res = await fetch(url, { cache: "no-store" });
+      if (!res.ok) continue;
+
+      const data = await res.json();
+      // carrega a lista de medicamentos na memória:
+      DB.splice(0, DB.length, ...(data.medicamentos || data || []));
+      updateDsMeta();
+      // já renderiza algo ao abrir:
+      renderResults(filterCurrent(DB));
+      return;
+    } catch (err) {
+      console.warn("Falha ao tentar carregar:", name, err);
+    }
+  }
+
+  // fallback amigável
+  document.querySelector("#results").innerHTML =
+    "<div class='notice'>Falha ao carregar a base. Recarregue com Ctrl+F5 ou tente novamente.</div>";
+}
+
+// chame o autoload no onload, se ainda não existia a chamada:
+document.addEventListener('DOMContentLoaded', autoload);
+</script>
+</title>
 <link rel="manifest" href="manifest.json"><meta name="theme-color" content="#0ea5e9">
 <style>
 :root{--bg:#0f172a;--txt:#e5e7eb;--mut:#94a3b8;--brand:#22c55e;--acc:#0ea5e9;--radius:14px}
