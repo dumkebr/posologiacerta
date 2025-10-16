@@ -1,7 +1,7 @@
 {
   "name": "PosologiaCerta",
   "short_name": "PosologiaCerta",
-  "start_url": "./index.html",
+  "start_url": "./index_beta2.html",
   "display": "standalone",
   "background_color": "#0f172a",
   "theme_color": "#0ea5e9",
