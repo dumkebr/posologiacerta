@@ -1,0 +1,320 @@
+/posologiacerta-beta3
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PosologiaCerta • v0.3 (clean)</title>
+  <style>
+    :root{
+      --bg:#0f172a; --panel:#111827ee; --card:#0b1227; --muted:#94a3b8; --text:#e5e7eb;
+      --brand:#22c55e; --brand-2:#10b981; --accent:#38bdf8; --danger:#ef4444; --warning:#f59e0b; --ok:#22c55e;
+      --radius:16px; --shadow:0 10px 30px rgba(0,0,0,.3);
+    }
+    *{box-sizing:border-box} html,body{height:100%}
+    body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,Helvetica Neue,Arial;
+      background: radial-gradient(1200px 800px at 10% -10%, #1e293b55, transparent),
+                  radial-gradient(1000px 700px at 110% 10%, #0ea5e955, transparent),
+                  var(--bg); color:var(--text)}
+    .wrap{max-width:1100px;margin:0 auto;padding:24px 16px 64px}
+    header{display:flex;gap:16px;align-items:center;justify-content:space-between;margin-bottom:16px}
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo{width:40px;height:40px;border-radius:12px;background:linear-gradient(145deg,var(--brand),var(--accent));display:grid;place-items:center;box-shadow:var(--shadow)}
+    .logo svg{fill:white} h1{font-size:20px;margin:0} .tag{font-size:12px;color:var(--muted)}
+    .panel{background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));border:1px solid rgba(148,163,184,.2);border-radius:var(--radius);box-shadow:var(--shadow)}
+    .searchbar{display:flex;gap:10px;align-items:stretch;padding:12px;border-bottom:1px solid rgba(148,163,184,.15)}
+    .searchbar input[type="text"]{flex:1;background:#0b1227;color:var(--text);border:1px solid rgba(148,163,184,.25);border-radius:12px;padding:14px 14px;font-size:16px;outline:none}
+    .searchbar button{border:0;border-radius:12px;padding:0 14px;display:flex;align-items:center;gap:8px;font-weight:600;cursor:pointer}
+    .btn{background:linear-gradient(145deg,var(--brand),var(--brand-2));color:#001b0e}
+    .btn-ghost{background:transparent;color:var(--text);border:1px solid rgba(148,163,184,.25)}
+    .tools{display:flex;flex-wrap:wrap;gap:10px;padding:10px 12px}
+    .chip{padding:8px 12px;border-radius:999px;background:#0b1227;border:1px solid rgba(148,163,184,.25);color:var(--muted);font-size:13px;cursor:pointer}
+    .chip.active{background:linear-gradient(145deg,#0ea5e9,#22c55e); color:#001b0e; border-color:transparent; font-weight:700}
+    .grid{display:grid;grid-template-columns:1fr; gap:16px; margin-top:16px}
+    .card{background:var(--card);border:1px solid rgba(148,163,184,.2);border-radius:var(--radius);padding:16px}
+    .result-item{display:grid;grid-template-columns:1fr auto; gap:12px; padding:14px 12px; border:1px solid rgba(148,163,184,.12); border-radius:14px; background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01)); box-shadow: var(--shadow); margin-bottom:12px}
+    .title{font-weight:800} .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,'Liberation Mono','Courier New';font-size:12px;color:#cbd5e1}
+    .muted{color:var(--muted)} .row{display:flex;gap:8px;align-items:center;flex-wrap:wrap} .row>*{flex:1}
+    .actions{display:flex;gap:8px} .actions button{padding:10px 12px;border-radius:12px;border:1px solid rgba(148,163,184,.25);background:#0b1227;color:var(--text);cursor:pointer}
+    .actions button.primary{background:linear-gradient(145deg,var(--accent),#22c55e); color:#001b0e; border:0}
+    footer{margin-top:28px;color:var(--muted);font-size:12px} .pill{display:inline-block;padding:4px 8px;border-radius:999px;border:1px solid rgba(148,163,184,.25);}
+    .notice{background:#0b1227;border:1px dashed rgba(148,163,184,.35);border-radius:12px;padding:10px 12px;color:var(--muted);font-size:13px}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <div class="logo" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24"><path d="M5 12a7 7 0 0114 0v1h1a2 2 0 010 4h-1.126A4.002 4.002 0 0115 21h-2a4 4 0 01-3.874-3H8a3 3 0 110-6h.126A7.002 7.002 0 015 12z"/></svg>
+        </div>
+        <div>
+          <h1>PosologiaCerta <span class="pill">v0.3</span></h1>
+          <div class="tag">Interface limpa • sem calculadora lateral</div>
+        </div>
+      </div>
+      <div class="actions">
+        <button id="btn-export" class="primary">Exportar JSON</button>
+        <button id="btn-favs">Favoritos (<span id="fav-count">0</span>)</button>
+      </div>
+    </header>
+
+    <section class="panel">
+      <div class="searchbar">
+        <input id="q" type="text" placeholder="Busque por fármaco, marca ou diagnóstico (ex.: amoxicilina, dipirona, sinusite)…" autocomplete="off" />
+        <button id="btn-search" class="btn">Buscar</button>
+        <button id="btn-clear" class="btn-ghost">Limpar</button>
+      </div>
+      <div class="tools">
+        <span class="chip active" data-mode="adulto">Adulto</span>
+        <span class="chip" data-mode="pediatria">Pediatria</span>
+        <span class="chip" data-mode="gestante">Gestante</span>
+        <span class="chip" data-mode="idoso">Idoso</span>
+        <span class="chip" id="chip-off">Offline-ready</span>
+        <select id="f-especialidade" title="Especialidade" style="margin-left:auto">
+          <option value="">Todas as especialidades</option>
+          <option>Clínica</option><option>Pediatria</option><option>GO</option><option>Cardio</option>
+          <option>Neuro</option><option>Psiquiatria</option><option>Dermato</option><option>Infecto</option>
+          <option>Orto</option><option>Otorrino</option><option>Pneumo</option><option>Gastro</option>
+          <option>Uro</option><option>Nefro</option><option>Endócrino</option><option>Oftalmo</option>
+          <option>Reumato</option><option>Onco</option><option>Geriatria</option><option>Farmaco</option>
+        </select>
+        <select id="f-via" title="Via">
+          <option value="">Todas as vias</option>
+          <option>VO</option><option>IV</option><option>IM</option><option>SC</option>
+          <option>INAL</option><option>TOP</option><option>OTI</option><option>OFT</option>
+          <option>RET</option><option>VAG</option>
+        </select>
+        <label class="chip" style="display:flex;align-items:center;gap:6px">
+          <input id="f-seg-gest" type="checkbox" style="accent-color:#22c55e"> gestação segura
+        </label>
+        <label class="chip" style="display:flex;align-items:center;gap:6px">
+          <input id="f-ajuste-renal" type="checkbox" style="accent-color:#22c55e"> exige ajuste renal
+        </label>
+      </div>
+    </section>
+
+    <div class="grid">
+      <section class="card" id="results">
+        <div class="notice">Digite acima para ver resultados. Use diagnósticos (ex.: <b>otite</b>, <b>sinusite</b>, <b>asma</b>).</div>
+      </section>
+    </div>
+
+    <footer>
+      <p><strong>Disclaimer:</strong> apoio rápido a profissionais de saúde. Confirmar doses vs. diretrizes/PCDT e ajustar a contexto clínico, função renal/hepática e interações.</p>
+      <p class="muted">© PosologiaCerta • protótipo v0.3</p>
+    </footer>
+  </div>
+
+  <script>
+  let DB = [
+    {
+      id:"amox", nome:"Amoxicilina", principioAtivo:"Amoxicilina",
+      sinonimos:["amox", "clavulin*"], indicacoes:["otite","sinusite","faringite","IVAS"],
+      formas:[{apresentacao:"Suspensão 250 mg/5 mL", via:"VO"},{apresentacao:"Cápsulas 500 mg", via:"VO"}],
+      faixas:{
+        adulto:{ dose:"500 mg a cada 8 h (ou 875 mg a cada 12 h)", duracao:"5–7 dias", max:"3 g/dia" },
+        pediatria:{ dose:"40–50 mg/kg/dia dividido a cada 8 h", duracao:"5–10 dias", max:"90 mg/kg/dia" },
+        gestante:{ nota:"Categoria B – uso seguro quando indicado" },
+        idoso:{ nota:"Atenção à função renal" }
+      },
+      ajustes:{ renal:"Ajustar com ClCr <30 mL/min (aumentar intervalo).", hepatica:"Sem ajuste habitual." },
+      contra:"Hipersensibilidade a penicilinas.",
+      interacoes:"Anticoagulantes (↑ INR), alopurinol (↑ rash).",
+      obs:"Considerar amoxi+clavulanato quando falha/otite grave."
+    },
+    {
+      id:"para", nome:"Paracetamol", principioAtivo:"Paracetamol",
+      sinonimos:["acetaminofeno","tylenol"], indicacoes:["dor","febre"],
+      formas:[{apresentacao:"Gotas 200 mg/mL", via:"VO"},{apresentacao:"Comprimidos 500 mg", via:"VO"}],
+      faixas:{
+        adulto:{ dose:"500–1000 mg a cada 6–8 h", max:"3–4 g/dia (preferir ≤3 g em uso crônico)" },
+        pediatria:{ dose:"10–15 mg/kg/dose a cada 6–8 h", max:"60–75 mg/kg/dia ou 3 g/dia (o que for menor)" },
+        gestante:{ nota:"Preferível analgésico/antitérmico na gestação" },
+        idoso:{ nota:"Preferir limite inferior de dose máxima" }
+      },
+      ajustes:{ renal:"Intervalar em ClCr <30 mL/min.", hepatica:"Reduzir dose/evitar em hepatopatia alcoólica." },
+      contra:"IH grave, consumo crônico de álcool (cautela).",
+      interacoes:"Isoniazida (↑ hepatotox.), varfarina (↑ INR).",
+      obs:"Checar combinações que já contenham paracetamol."
+    },
+    {
+      id:"nista", nome:"Nistatina (oral)", principioAtivo:"Nistatina",
+      sinonimos:["nist"], indicacoes:["candidíase oral"],
+      formas:[{apresentacao:"Suspensão 100.000 UI/mL", via:"VO/bochecho"}],
+      faixas:{
+        adulto:{ dose:"5 mL 4x/dia, manter 48 h após desaparecer as lesões", duracao:"7–14 dias" },
+        pediatria:{ dose:"100.000 UI (1 mL) 4x/dia lactentes; 2–5 mL 4x/dia crianças", duracao:"7–14 dias" },
+        gestante:{ nota:"Segura (absorção mínima)" }, idoso:{ nota:"Sem ajuste" }
+      },
+      ajustes:{ renal:"Sem ajuste.", hepatica:"Sem ajuste." },
+      contra:"Hipersensibilidade.", interacoes:"Sem relevância sistêmica.",
+      obs:"Orientar bochechar e manter em contato antes de engolir."
+    }
+  ];
+
+  const INDEX_DIAGNOSTICO = {
+    sinusite:["amox"], otite:["amox"], dor:["para"], febre:["para"], candidiase:["nista"]
+  };
+
+  const state = { modo:"adulto", query:"", favs: loadFavs() };
+
+  function qs(sel){return document.querySelector(sel)}
+  function el(tag, props={}, children=[]){ const e=document.createElement(tag); Object.assign(e, props); if(props.className) e.setAttribute('class', props.className); children.forEach(c=> e.appendChild(typeof c==='string'? document.createTextNode(c): c)); return e; }
+  function loadFavs(){ try{ return JSON.parse(localStorage.getItem('pc_favs')||"[]"); }catch(e){ return []} }
+  function saveFavs(f){ localStorage.setItem('pc_favs', JSON.stringify(f)); updateFavCount(); }
+  function updateFavCount(){ qs('#fav-count').textContent = state.favs.length }
+  function copyTxt(txt){ navigator.clipboard?.writeText(txt); }
+
+  function fmtItem(item){
+    const faixa = item.faixas[state.modo] || {};
+    const head = `${item.nome} (${item.principioAtivo}) — ${state.modo.toUpperCase()}`;
+    const formas = (item.formas||[]).map(f=>`• ${f.apresentacao} – via ${f.via}`).join('\n');
+    const dose = faixa.dose? `Dose: ${faixa.dose}`: (faixa.nota? `Nota: ${faixa.nota}`: "");
+    const dur = faixa.duracao? `\nDuração: ${faixa.duracao}`: "";
+    const max = faixa.max? `\nMáximo: ${faixa.max}`: "";
+    const ajustes = item.ajustes? `\nAjustes — Renal: ${item.ajustes.renal || '-'} | Hepática: ${item.ajustes.hepatica || '-'}`: '';
+    const contra = item.contra? `\nContraindicações: ${item.contra}`: '';
+    const inter = item.interacoes? `\nInterações: ${item.interacoes}`: '';
+    const obs = item.obs? `\nObs.: ${item.obs}`: "";
+    return `${head}\n${formas}\n${dose}${dur}${max}${ajustes}${contra}${inter}${obs}`.trim();
+  }
+  function fmtProntuario(item){
+    const f = item.faixas[state.modo] || {};
+    const linhas = [
+      `MEDICAÇÃO: ${item.nome} (${item.principioAtivo})`,
+      f.dose? `POSOLOGIA: ${f.dose}` : (f.nota? `NOTA: ${f.nota}`:''),
+      f.duracao? `DURAÇÃO: ${f.duracao}`: '',
+      f.max? `MÁXIMO: ${f.max}`: '',
+      item.ajustes? `AJUSTES: Renal - ${item.ajustes.renal || '-'} | Hepática - ${item.ajustes.hepatica || '-'}`: '',
+      item.contra? `CONTRAINDICAÇÕES: ${item.contra}`:'',
+      item.interacoes? `INTERAÇÕES: ${item.interacoes}`:'',
+      item.obs? `OBS: ${item.obs}`:''
+    ].filter(Boolean);
+    return linhas.join('\n');
+  }
+
+  function filterCurrent(list){
+    const esp = qs('#f-especialidade').value;
+    const via = qs('#f-via').value;
+    const segGest = qs('#f-seg-gest').checked;
+    const reqRenal = qs('#f-ajuste-renal').checked;
+    return list.filter(item=>{
+      if(esp && !(item.especialidades||[]).includes(esp)) return false;
+      if(via){
+        const hasVia = (item.formas||[]).some(f=> (f.via||'').toUpperCase().includes(via));
+        if(!hasVia) return false;
+      }
+      if(segGest){
+        const g = item.faixas?.gestante || {};
+        const nota = (g.nota||'').toLowerCase();
+        if(!(nota.includes('segur') || nota.includes('categoria b') || nota.includes('prefer'))) return false;
+      }
+      if(reqRenal){
+        const aj = item.ajustes?.renal || '';
+        if(!aj || !/ajust|clcr|clearance|renal/i.test(aj)) return false;
+      }
+      return true;
+    });
+  }
+
+  function search(q, silent){
+    q = (q||"").trim().toLowerCase();
+    state.query = q;
+    let idsDiag = INDEX_DIAGNOSTICO[q] || [];
+    const resRaw = DB.filter(x=>
+      x.nome.toLowerCase().includes(q) ||
+      x.principioAtivo.toLowerCase().includes(q) ||
+      (x.sinonimos||[]).some(s=> s.toLowerCase().includes(q)) ||
+      (x.indicacoes||[]).some(d=> d.toLowerCase().includes(q)) ||
+      idsDiag.includes(x.id)
+    );
+    const res = filterCurrent(resRaw);
+    if(!silent) renderResults(res);
+    return res;
+  }
+
+  function renderResults(list){
+    const root = qs('#results');
+    root.innerHTML = '';
+    if(!list.length){
+      root.appendChild(el('div',{className:'notice', innerHTML:'Sem resultados. Tente variar: princípio ativo, marca, diagnóstico ou via.'})); 
+      return; 
+    }
+    list.forEach(item=>{
+      const faixa = item.faixas[state.modo] || {};
+      const head = el('div', {className:'title', innerText: `${item.nome} • ${state.modo}`});
+      const sub = el('div', {className:'muted mono', innerText: `${item.principioAtivo}  ·  ${item.formas.map(f=>f.apresentacao).join(' • ')}`});
+      const body = el('div', {innerHTML:`
+        <div><b>Indicações:</b> ${(item.indicacoes||[]).join(', ') || '-'}</div>
+        <div><b>Dose:</b> ${faixa.dose || (faixa.nota? faixa.nota : '-')}</div>
+        ${faixa.duracao? `<div><b>Duração:</b> ${faixa.duracao}</div>`:''}
+        ${faixa.max? `<div><b>Máximo:</b> ${faixa.max}</div>`:''}
+        ${item.ajustes? `<div><b>Ajustes:</b> Renal: ${item.ajustes.renal || '-'} · Hepática: ${item.ajustes.hepatica || '-'}</div>`:''}
+        ${item.contra? `<div><b>Contraindicações:</b> ${item.contra}</div>`:''}
+        ${item.interacoes? `<div><b>Interações:</b> ${item.interacoes}</div>`:''}
+        ${item.obs? `<div class="muted">Obs.: ${item.obs}</div>`:''}
+      `});
+      const btnCopyPos = el('button', {innerText:'Copiar posologia', onclick:()=> copyTxt(fmtItem(item))});
+      const btnCopyPront = el('button', {innerText:'Copiar p/ prontuário', onclick:()=> copyTxt(fmtProntuario(item))});
+      const btnFav = el('button', {innerText: state.favs.includes(item.id)? '★ Salvo' : '☆ Favoritar', onclick:()=> toggleFav(item.id, btnFav)});
+      const actions = el('div', {className:'actions'}, [btnCopyPos, btnCopyPront, btnFav]);
+      const left = el('div', {}, [head, sub, body]);
+      const right = el('div', {}, [actions]);
+      const row = el('div', {className:'result-item'}, [left, right]);
+      root.appendChild(row);
+    });
+  }
+
+  function toggleFav(id, btn){
+    const i = state.favs.indexOf(id);
+    if(i>-1){ state.favs.splice(i,1); btn.innerText='☆ Favoritar'; }
+    else { state.favs.push(id); btn.innerText='★ Salvo'; }
+    saveFavs(state.favs);
+  }
+
+  document.addEventListener('DOMContentLoaded', async ()=>{
+    updateFavCount();
+
+    if('serviceWorker' in navigator){
+      const swCode = `self.addEventListener('install',e=>{e.waitUntil(caches.open('pc-v3').then(c=>c.addAll(['./'])))});self.addEventListener('fetch',e=>{e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request)))})`;
+      const blob = new Blob([swCode], {type:'text/javascript'});
+      const url = URL.createObjectURL(blob);
+      try{ await navigator.serviceWorker.register(url); }catch{}
+    }
+
+    renderResults(DB);
+
+    qs('#btn-search').addEventListener('click', ()=> renderResults(search(qs('#q').value)) );
+    qs('#btn-clear').addEventListener('click', ()=> { qs('#q').value=''; renderResults(filterCurrent(DB)); });
+    qs('#q').addEventListener('keydown', (e)=>{ if(e.key==='Enter'){ renderResults(search(qs('#q').value)) } });
+
+    document.querySelectorAll('.chip[data-mode]').forEach(ch=>{
+      ch.addEventListener('click', ()=>{
+        document.querySelectorAll('.chip[data-mode]').forEach(c=> c.classList.remove('active'));
+        ch.classList.add('active');
+        state.modo = ch.dataset.mode;
+        renderResults(filterCurrent(search(state.query,true)));
+      });
+    });
+
+    qs('#btn-export').addEventListener('click', ()=>{
+      const blob = new Blob([JSON.stringify(DB,null,2)], {type:'application/json'});
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'posologiacerta-base.json';
+      a.click();
+    });
+
+    qs('#btn-favs').addEventListener('click', ()=>{
+      const favList = state.favs.map(id=> DB.find(x=>x.id===id)?.nome || id).join(', ');
+      alert(favList? `Favoritos: ${favList}` : 'Nenhum favorito ainda.');
+    });
+
+    ['f-especialidade','f-via','f-seg-gest','f-ajuste-renal'].forEach(id=>{
+      qs('#'+id).addEventListener('change', ()=> renderResults(filterCurrent(search(state.query,true))));
+    });
+  });
+  </script>
+</body>
+</html>
